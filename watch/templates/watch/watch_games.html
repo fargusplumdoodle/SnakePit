@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SnakePit</title>
+    {%  load staticfiles  %}
+    <script src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "js/jcanvas.min.js" %}"></script>
+</head>
+<style>
+    body {
+        background-color: darkgreen;
+    }
+    .page-header {
+        margin: auto;
+        width: 400px;
+    }
+    .page-content {
+        background-color: white;
+        margin: auto;
+        width: 90%;
+    }
+</style>
+<body>
+    <div class="page-header">
+        <div>
+            <img id="page_logo" width="200px" height="130 px" src="{%  static "assets/SnakePitLogo.png"%}" alt="Step Backward">
+            <h3>Watch Battlesnake games!</h3>
+        </div>
+    </div>
+    <div class="page-content">
+        <div id="gameInfoContainer">
+            <div id="gameContainer"></div>
+            <div id="infoContainer">
+                <div id="info"></div>
+                <select id="gameSelect">
+                </select>
+                <button type="button" onclick="load_game()">Load Game</button>
+                <div id="buttons">
+                    <img id="backButton" onclick="stepBackward()" src="{%  static "assets/buttons/backward.png"%}" alt="Step Backward">
+                    <img id="playPauseButton" onclick="playPause()" src="{%  static "assets/buttons/play.png"%}" alt="Pause">
+                    <img id="forwardButton" onclick="stepForward()" src="{%  static "assets/buttons/forward.png"%}" alt="Step Forward">
+                    <img class="save" src="{%  static "assets/buttons/save.png"%}" alt="Step Forward">
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    /////////////////////////////////// INIT ////////////////////////////////////////////
+    // getting data from python
+    let data = JSON.parse(document.getElementById("gameData").value.replace(/'/g, "\""));
+
+    // mod is the scale factor for everything. I want it to be 75 % of the screen
+    let mod = window.innerWidth / data.width * 3 / 4;
+
+    let turn = 0;
+    let max_turns = data.turn.length - 1;
+    let all_games = [];
+
+    // states: PAUSED, PLAYING
+    let state = "PAUSED";
+
+    // creating canvas with proper dimentions
+    let canvas = '<canvas id="battlesnakeGame" width="' + data.width * mod + '" height="' + data.height * mod + '"><p>Your browser does not support awesomeness</p></canvas>';
+
+    // creating canvas
+    document.getElementById("gameContainer").innerHTML = canvas;
+
+    // controller container styles
+    //button styles
+    document.getElementById("buttons").style.margin = "auto";
+    document.getElementById("buttons").style.width = "100%";
+    document.getElementById("buttons").style.height = "100%";
+
+    //info panel styles
+    document.getElementById("infoContainer").style.backgroundColor = "darkBlue";
+    document.getElementById("infoContainer").style.float = "right";
+    document.getElementById("infoContainer").style.width = "" + parseInt(window.innerWidth - (data.width * mod) - 30) + "px";
+    document.getElementById("infoContainer").style.height = "" + parseInt(data.height * mod) + "px";
+
+    // info style
+    document.getElementById("info").style.padding = "10px";
+    document.getElementById("info").style.color = "#FFFFFF";
+
+    //game styles
+    document.getElementById("gameContainer").style.float = "left";
+    // creating canvas with proper dimentions
+    let canvas = '<canvas id="battlesnakeGame" width="' + data.width * mod + '" height="' + data.height * mod + '"><p>Your browser does not support awesomeness</p></canvas>' ;
+
+    ///////////////////////////// FUNCTIONS /////////////////////////////////////////
+    function render_background() {
+        $('game').setLayer('background', {visible: true});
+        // drawing background
+        $game.drawRect({
+            fillStyle: 'darkBlue',
+            strokeStyle: 'blue',
+            strokeWidth: 1,
+            x: 0, y: 0,
+            fromCenter: false,
+            width: data.width * mod,
+            height: data.height * mod
+        });
+
+        // drawing background grid
+        for (let x = 0; x < data.width * mod; x += mod) {
+            for (let y = 0; y < data.height * mod; y += mod ) {
+                $game.drawRect({
+                    fillStyle: 'grey',
+                    strokeStyle: 'blue',
+                    strokeWidth: 1,
+                    x: x + mod / 4, y: y + mod / 4,
+                    fromCenter: false,
+                    width: mod / 2,
+                    height: mod / 2
+                });
+
+            }
+        }
+    }
+
+    function reset() {
+        render_background()
+    }
+    ///////////////////////////// MAIN //////////////////////////////////////////////
+    reset()
+</script>
+
+</body>
+</html>

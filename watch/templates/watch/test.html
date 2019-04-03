@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TESTING</title>
+    {%  load staticfiles  %}
+    <script src="{% static "js/jquery-3.3.1.js" %}"></script>
+    <script src="{% static "js/jcanvas.min.js" %}"></script>
+</head>
+<body>
+<input type="hidden" id="myVar" name="variable" value="{{ data }}">
+<script>
+   // var dat = JSON.parse({{ data }});
+   var data = JSON.parse(document.getElementById("myVar").value);
+
+    //console.log(" {{ data}} ");
+   console.log(data);
+   console.log(typeof(data));
+
+</script>
+
+</body>
+</html>
