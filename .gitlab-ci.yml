@@ -1,0 +1,49 @@
+#
+# ICS 221 Python/Django API Gitlab CI FILE
+# ------------------------------------
+# Purpose: This activates the GitLab CI Pipeline for the
+# Python/Django API
+#
+# Author: Jason Cumiskey, March 2019
+#
+# NOTE:
+# -----
+# THIS CI FILE IS FOR A PYTHON/DJANGO API
+# USING SQLITE3 DB ONLY
+#
+# Deploy Stage:
+# -------------
+# It pushes the GitLab master branch of your project to Dokku.
+# Dokku will then build and deploys it.
+#
+# ********* REQUIREMENTS FOR USING THIS *********************
+# Note to Instructor: SSH_PRIVATE_KEY var must be set 
+# in GitLab for the group this project is in.
+# ***********************************************************
+variables:
+  # hostname of the DOKKU deployment server
+  DEPLOY_SRV: deploy.cs.camosun.bc.ca
+
+before_script:
+  # --- SSH Settings to communicate with Dokku: DON'T MESS WITH THIS! ---
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+stages:
+  - deploy
+
+deploy_app_to_dokku:
+  stage: deploy
+  environment: production
+  tags:
+    # use a deploy runner
+    - deploy
+  script:
+    # push the app to the deploy server
+    - git push dokku@$DEPLOY_SRV:$CI_PROJECT_NAME master
+  only:
+    # should only be pushing the master branch
+    - master
