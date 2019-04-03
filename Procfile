@@ -1,1 +1,1 @@
-web: gunicorn mb_api.wsgi
+web: gunicorn ithiessen.wsgi
