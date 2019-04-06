@@ -152,37 +152,4 @@ class APITest(TestCase):
         self.send_data('end', self.game)
 
 
-# r = requests.delete(url=DATA_HOST + "/games", data=json.dumps({'gid': game['game']['id']}), auth=('fargusD', '1234asdf'))
-# if r.status_code != 200:
-#     raise ValueError('Host returned a non 200 status code: ' + r.status_code)
-#
-# def snake_test():
-#
-#     def send_data(option, data):
-#         content = json.dumps(data)
-#         r = requests.post(url=DATA_HOST + "/SekhnetSnake/" + option, data=content)
-#         if r.status_code != 200:
-#             raise ValueError('Host returned a non 200 status code: ' + r.status_code)
-#         print(r.content.decode('utf-8'))
-#
-#     # start testing
-#     send_data('start', game)
-#
-#     # sending turns
-#     for i in range(3):
-#         game['turn'] += 1
-#         send_data('move', game)
-#
-#     # ending game
-#     game['turn'] += 1
-#     send_data('end', game)
-#
-#     # r = requests.delete(url=DATA_HOST + "/games", data=json.dumps({'gid': game['game']['id']}), auth=('fargusD', '1234asdf'))
-#     # if r.status_code != 200:
-#     #     raise ValueError('Host returned a non 200 status code: ' + r.status_code)
-#     # print(r.content)
-
-if __name__ == '__main__':
-    api_test()
-# snake_test()
 
