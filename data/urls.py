@@ -28,5 +28,6 @@ from . import views
 
 urlpatterns = [
     url('list', views.list_game),
+    url('get', views.get_game),
     url('', views.GameView.as_view()),
 ]
