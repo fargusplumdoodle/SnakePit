@@ -13,44 +13,10 @@ class GameView(APIView):
     authentication_classes = (SessionAuthentication, BasicAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
-        try:
-            # parsing data
-            data = json.loads(request.body)
-
-            # getting gid, if not in request it will raise a key error
-            # and we will tell the client they dun goofed
-            gid = data['gid']
-
-            # getting game from gid, we dont use this variable,
-            # we just want to ensure the game exists. If it doesnt this
-            # function will raise an index error
-            game = c.get_game_by_gid(gid)
-        except KeyError:
-            return HttpResponse(status=404, content=json.dumps({
-                'error': 'invalid request'
-            }))
-        except IndexError:
-            return HttpResponse(status=404, content=json.dumps({
-                'error': 'game not found'
-            }))
-        except json.decoder.JSONDecodeError:
-            print('bad request: ', request, request.body)
-            return HttpResponse(status=400, content=json.dumps({
-                'error': 'bad request',
-            }))
-
-        try:
-            data = json.dumps(c.package_game_for_watch(gid))
-            print(data)
-            return HttpResponse(status=200, content=data)
-        except Exception:
-            return HttpResponse(status=500, content=json.dumps({
-                'error': 'internal error, probably multiple games with that GID'
-            }))
-
     def post(self, request):
         """
+            Adds a single turn to the database, to the appropriate game
+
             Post takes the following options:
             option:
                 - start
@@ -99,28 +65,89 @@ class GameView(APIView):
             }))
 
     def delete(self, request):
+        """
+        This view just deletes a specified GID or Turn
+
+        To delete a whole game:
+            {
+                'gid': <gid requested>
+            }
+        To delete a turn:
+            {
+                'gid': <gid requested>,
+                'turn': <turn number to delete>
+            }
+        """
         try:
             r = json.loads(request.body)
-            gid = r['gid']
+        except json.decoder.JSONDecodeError:
+            print("bad json:" + str(request.body))
+            return HttpResponse(status=400, content=json.dumps({
+                'error': 'bad request',
+            }))
 
-            if 'turn' in r:
-                # we need to delete  the specified turn
-                c.delete_turn(gid, r['turn'])
-            else:
-                # deleting whole game because turn was not specified
-                c.delete_game(gid)
+        gid = r['gid']
 
-            return HttpResponse(status=200)
+        if 'turn' in r:
+            # we need to delete  the specified turn
+            c.delete_turn(gid, r['turn'])
+        else:
+            # deleting whole game because turn was not specified
+            c.delete_game(gid)
 
+        return HttpResponse(status=200)
+
+    def get(self, request):
+        """
+        This view just returns a specified GID
+        It does not require any authentication to access.
+
+        Request must have:
+            {
+                'gid': <gid requested>
+            }
+        """
+        try:
+            # parsing data
+            data = json.loads(request.body)
+            # getting gid, if not in request it will raise a key error
+            # and we will tell the client they dun goofed
+            gid = data['gid']
+
+            # getting game from gid, we dont use this variable,
+            # we just want to ensure the game exists. If it doesnt this
+            # function will raise an index error
+            game = c.get_game_by_gid(gid)
+        except KeyError:
+            return HttpResponse(status=404, content=json.dumps({
+                'error': 'invalid request'
+            }))
+        except IndexError:
+            return HttpResponse(status=404, content=json.dumps({
+                'error': 'game not found'
+            }))
         except json.decoder.JSONDecodeError:
             print('bad request: ', request, request.body)
             return HttpResponse(status=400, content=json.dumps({
                 'error': 'bad request',
             }))
 
+        try:
+            data = json.dumps(c.package_game_for_watch(gid))
+            print(data)
+            return HttpResponse(status=200, content=data)
+        except Exception:
+            return HttpResponse(status=500, content=json.dumps({
+                'error': 'internal error, probably multiple games with that GID'
+            }))
+
 
 @csrf_exempt
 def list_game(request):
+    """
+    This view just returns the list of all of the GIDs in the database
+    It does not require any authentication to access.
+    """
     gameList = []
 
     for game in Game.objects.all():
@@ -128,6 +155,56 @@ def list_game(request):
 
     response = json.dumps({"games": gameList})
     return HttpResponse(status=200, content=response)
+
+
+@csrf_exempt
+def get_game(request):
+    """
+    This view just returns a specified GID
+    It does not require any authentication to access.
+
+    Request must have:
+        {
+            'gid': <gid requested>
+        }
+    """
+    if request.method != 'POST':
+        return HttpResponse(status=404, content=json.dumps({
+            'error': 'invalid method, requires POST'
+        }))
+    try:
+        # parsing data
+        data = json.loads(request.body)
+        # getting gid, if not in request it will raise a key error
+        # and we will tell the client they dun goofed
+        gid = data['gid']
+
+        # getting game from gid, we dont use this variable,
+        # we just want to ensure the game exists. If it doesnt this
+        # function will raise an index error
+        game = c.get_game_by_gid(gid)
+    except KeyError:
+        return HttpResponse(status=404, content=json.dumps({
+            'error': 'invalid request'
+        }))
+    except IndexError:
+        return HttpResponse(status=404, content=json.dumps({
+            'error': 'game not found'
+        }))
+    except json.decoder.JSONDecodeError:
+        print('bad request: ', request, request.body)
+        return HttpResponse(status=400, content=json.dumps({
+            'error': 'bad request',
+        }))
+
+    try:
+        data = json.dumps(c.package_game_for_watch(gid))
+        print(data)
+        return HttpResponse(status=200, content=data)
+    except Exception:
+        return HttpResponse(status=500, content=json.dumps({
+            'error': 'internal error, probably multiple games with that GID'
+        }))
 
 
 def simple_validate_game_data(data):
