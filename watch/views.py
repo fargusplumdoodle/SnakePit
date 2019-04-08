@@ -1,9 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import json
 from data.models import Game, Turn
 from django.http import HttpResponse
-
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+
 data = {
     "you": {
         "health": 79,
@@ -145,14 +147,9 @@ def index(request):
     return render(request, 'watch/index.html', load_recent_game_from_database())
 
 
+@login_required(login_url='accounts/login/')
 def watch_games(request):
     return render(request, 'watch/watch_games.html', load_recent_game_from_database())
-
-
-@csrf_exempt
-def test_snake(request):
-    print(request.body)
-    return HttpResponse(content=json.dumps({'eeyy': 'lmao'}))
 
 
 def load_recent_game_from_database():
