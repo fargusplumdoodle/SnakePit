@@ -141,11 +141,7 @@
             const myJson = await response.json(); //extract JSON from the http response
             data = myJson;
 
-            turn = 0;
-            // rendering initial background
-            render_background();
-            // getting initial info (turn is initialized to 0)
-            update_info(turn);
+            reset();
 
             console.log("loaded: " + gid);
         };
@@ -348,14 +344,19 @@
             console.log("Paused");
         }
 
-
+        function reset(){
+            turn = 0;
+            state = "PAUSED";
+            $('game').clearCanvas();
+            // rendering initial background
+            render_background();
+            // getting initial info (turn is initialized to 0)
+            update_info(turn);
+            // getting gamelist from server
+            get_game_list();
+        }
         //////////////////////////// MAIN ///////////////////////////////
-        // rendering initial background
-        render_background();
-        // getting initial info (turn is initialized to 0)
-        update_info(turn);
-        // getting gamelist from server
-        get_game_list();
+        reset();
 
         // play
         let playback = window.setInterval(function () {
@@ -375,7 +376,6 @@
                 }
             }
         }, 200);
-        //$game.clearCanvas()
     </script>
 
 </body>

@@ -1,7 +1,9 @@
 from django.shortcuts import render
 import json
 from data.models import Game, Turn
+from django.http import HttpResponse
 
+from django.views.decorators.csrf import csrf_exempt
 data = {
     "you": {
         "health": 79,
@@ -145,6 +147,14 @@ def index(request):
 
 def watch_games(request):
     return render(request, 'watch/watch_games.html', load_recent_game_from_database())
+
+
+@csrf_exempt
+def test_snake(request):
+    print(request.body)
+    return HttpResponse(content=json.dumps({'eeyy': 'lmao'}))
+
+
 
 
 def load_recent_game_from_database():
