@@ -155,8 +155,6 @@ def test_snake(request):
     return HttpResponse(content=json.dumps({'eeyy': 'lmao'}))
 
 
-
-
 def load_recent_game_from_database():
     """
     This loads the most recent game stored in the database and returns it in a dictionary ready for passing to index
