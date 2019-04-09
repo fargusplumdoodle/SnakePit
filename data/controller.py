@@ -158,8 +158,12 @@ def get_game(data):
     """
     gid = data['game']['id']
 
-    # getting game object
-    return Game.objects.filter(gid=gid)[0]
+    game_queryset = Game.objects.filter(gid=gid)
+
+    if len(game_queryset) == 0:
+        raise ValueError('Requested game does not exist in database')
+
+    return game_queryset.first()
 
 
 def get_game_by_gid(gid):
