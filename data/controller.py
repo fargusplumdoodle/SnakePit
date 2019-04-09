@@ -25,7 +25,7 @@ def delete_turn(gid, turn_no):
 def create_game(data):
     '''
     This function creates and saves a game in the database with the specified name
-    :param data: game id
+    :param data: game object
     '''
     gid = data['game']['id']
     snake_name = data['you']['name']

@@ -122,6 +122,10 @@ class GameView(APIView):
             return HttpResponse(status=404, content=json.dumps({
                 'error': 'invalid request'
             }))
+        except ValueError:
+            return HttpResponse(status=404, content=json.dumps({
+                'error': 'game not found'
+            }))
         except IndexError:
             return HttpResponse(status=404, content=json.dumps({
                 'error': 'game not found'
