@@ -147,7 +147,7 @@ def index(request):
     return render(request, 'watch/index.html', load_recent_game_from_database())
 
 
-@login_required(login_url='accounts/login/')
+#@login_required(login_url='accounts/login/')
 def watch_games(request):
     return render(request, 'watch/watch_games.html', load_recent_game_from_database())
 
