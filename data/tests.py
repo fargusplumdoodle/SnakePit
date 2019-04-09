@@ -222,12 +222,12 @@ class TestGameEndpoint(TestCase):
         for i in range(3):
             self.game['turn'] += 1
             r = self.send_data('turn', self.game)
-            assert r.status_code != 200  # status code shouldn't be 200 after we sent invalid data
+            assert r.status_code == 404  # status code should be 404
 
         # ending game
         self.game['turn'] += 1
         r = self.send_data('end', self.game)
-        assert r.status_code != 200  # status code shouldn't be 200 after we sent invalid data
+        assert r.status_code == 404  # status code shouldn't be 200 after we sent invalid data
 
     def tearDown(self):
         Game.objects.filter(gid='temp_12345').delete()
