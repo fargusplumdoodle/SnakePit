@@ -164,6 +164,13 @@ class TestGameEndpoint(TestCase):
         self.gid = previous_gid
         self.game['game']['id'] = previous_gid
 
+    def test_get_games_list(self):
+        r = requests.get(url=self.DATA_HOST + "/games/list")
+
+        games = json.loads(r.text)['games']
+
+        assert len(games) == len(Game.objects.all())
+
     def test_create_game_properly(self):
         # --- set up ----
         self.send_data('start', self.game)
@@ -236,4 +243,5 @@ class TestGameEndpoint(TestCase):
         if len(Game.objects.filter(gid=self.gid)) > 0:
             Game.objects.filter(gid=self.gid).delete()
 
-
+        if random.choice([True, False, False]):
+            self.create_game(self.gid + '0')
