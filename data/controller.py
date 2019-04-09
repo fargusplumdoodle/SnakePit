@@ -172,8 +172,12 @@ def get_game_by_gid(gid):
     :param data: json request from battlesnake gmae
     :return: game object from database
     """
-    # getting game object
-    return Game.objects.filter(gid=gid)[0]
+    game_queryset = Game.objects.filter(gid=gid)
+
+    if len(game_queryset) == 0:
+        raise ValueError('Requested game does not exist in database')
+
+    return game_queryset.first()
 
 
 def load_recent_gid():
