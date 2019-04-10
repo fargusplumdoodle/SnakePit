@@ -53,6 +53,11 @@
             <img id="forwardButton" onclick="stepForward()" src="{%  static "assets/buttons/forward.png"%}" alt="Step Forward">
 
             <div id="result_info"></div>
+
+            <br/>
+            <button type="button" onclick="deleteTurn()">Delete Turn</button>
+            <button type="button" onclick="deleteGame()">Delete Game</button>
+
         </div>
     </div>
 <script>
@@ -63,8 +68,27 @@
     let max_turn = undefined;
     let result = 'n/a';
 
+    const deleteGame = async () => {
+            if (info_gid === 'example_gid') {
+                alert("You need to load a game first");
+                return;
+            }
+
+            // double checking, I dont want users to have this functionality if your reading this Jason
+            let answer = confirm("Are you sure you want to delete GID:" + info_gid);
+
+            if ( answer ) {
+
+            }
+    };
+    function deleteTurn() {
+        if (info_gid === 'example_gid') {
+            alert("You need to load a game first");
+        }
+
+    }
     const get_game_list = async () => {
-        let data_endpoint = 'http://localhost:8000/games/list';
+        let data_endpoint = '{{ api_url }}games/list';
         let body = {};
         const response = await fetch(data_endpoint, {
             method: 'POST',
@@ -79,7 +103,6 @@
         let dropdown_div = document.getElementById("gameSelect");
         for (let i = 0; i < myJson.games.length; i++){
             let option = '<option value="' + myJson.games[i] + '">' + myJson.games[i] + '</option>';
-            console.log(option);
             dropdown_div.innerHTML += option;
         }
 
@@ -88,7 +111,7 @@
     const load_game = async () => {
         let gid = document.getElementById("gameSelect").value;
 
-        let data_endpoint = 'http://localhost:8000/games/get';
+        let data_endpoint = '{{ api_url }}games/get';
         let body = JSON.stringify({"gid": gid});
 
 
@@ -123,8 +146,12 @@
         let snake_url = document.getElementById("snake-url").value;
         let body;
 
-        if (info_gid == 'example_gid' ){
+        if (info_gid === 'example_gid' ){
             alert("Please load a game first");
+            return;
+        } else if (snake_url === ''){
+            alert("Please enter a valid snake url first");
+            return;
         }
 
         body = JSON.stringify({
@@ -132,7 +159,7 @@
             'data': data.turn[turn]
         });
 
-        const response = await fetch('{{ api_url }}', {
+        const response = await fetch('{{ api_url }}games/snake' , {
             method: 'POST',
             body: body, // string or object
             mode: 'no-cors',
