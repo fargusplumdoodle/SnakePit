@@ -18,7 +18,12 @@
     .page-content {
         background-color: white;
         margin: auto;
-        width: 90%;
+        padding:5%;
+        width: 30%;
+    }
+    .inner-page-content{
+        margin:auto;
+        width:90%;
     }
     p, h3 {
         font-family: "Ubuntu";
@@ -31,21 +36,22 @@
         </div>
     </div>
     <div class="page-content">
+        <div class="inner-page-content">
+            <p>Select Game:</p>
+            <select id="gameSelect">
+                                       </select>
+            <button type="button" onclick="load_game()">Load Game</button>
+            <br>
+            <p>Snake URL:</p>
+            <input type="text" id="snake-url">
 
-        <p>Select Game:</p>
-        <select id="gameSelect">
-        </select>
-        <button type="button" onclick="load_game()">Load Game</button>
-        <br>
-        <p>Snake URL:</p>
-        <input type="text" id="snake-url">
+            <div id="turn_info"></div>
+            <br>
+            <img id="backButton" onclick="stepBackward()" src="{%  static "assets/buttons/backward.png"%}" alt="Step Backward">
+            <img id="forwardButton" onclick="stepForward()" src="{%  static "assets/buttons/forward.png"%}" alt="Step Forward">
 
-        <div id="turn_info"></div>
-        <br>
-        <img id="backButton" onclick="stepBackward()" src="{%  static "assets/buttons/backward.png"%}" alt="Step Backward">
-        <img id="forwardButton" onclick="stepForward()" src="{%  static "assets/buttons/forward.png"%}" alt="Step Forward">
-
-        <div id="result_info"></div>
+            <div id="result_info"></div>
+        </div>
     </div>
 <script>
     let data = undefined;
@@ -102,7 +108,7 @@
 
     function update_info(){
         let info = document.getElementById("turn_info");
-        info.innerHTML = "<p>Game:  <b>" + info_gid + "</b>    Turn: <b>" + turn + "</b></p>";
+        info.innerHTML = "<p>Game:  <b>" + info_gid + "</b><br/>Turn: <b>" + turn + "</b></p>";
     }
 
     function update_response() {

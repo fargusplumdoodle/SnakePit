@@ -1,6 +1,7 @@
 # from django.test import TestCase
 from unittest import TestCase
 from django.contrib.auth.models import User
+from data import controller as c
 from data.models import Game, Turn
 import random
 import requests
@@ -11,14 +12,6 @@ import json
 Assertions trigger when the statement is FALSE... you fool
 '''
 
-class TestCallBattleSnake(TestCase):
-    def test_call_snake(self):
-        data = {"you": {"health": 98, "body": [{"y": 3, "x": 14}, {"y": 4, "x": 14}, {"y": 4, "x": 13}], "name": "SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"}, "turn": 2, "board": {"snakes": [{"health": 98, "body": [{"y": 4, "x": 11}, {"y": 3, "x": 11}, {"y": 3, "x": 12}], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"}, {"health": 98, "body": [{"y": 3, "x": 14}, {"y": 4, "x": 14}, {"y": 4, "x": 13}], "name": "SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"}], "width": 17, "height": 10, "food": [{"y": 4, "x": 16}, {"y": 0, "x": 5}, {"y": 7, "x": 8}, {"y": 0, "x": 0}, {"y": 0, "x": 7}, {"y": 4, "x": 1}, {"y": 1, "x": 5}, {"y": 1, "x": 12}, {"y": 9, "x": 4}, {"y": 9, "x": 5}]}, "game": {"id": "t_6"}}
-        url = 'http://localhost:8080/move'
-        r = requests.post(url=url, json=data)
-        print(r.headers['content-type'])
-        print(r.status_code)
-        print(r.text)
 
 class TestGameEndpoint(TestCase):
     def setUp(self):
