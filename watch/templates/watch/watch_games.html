@@ -84,6 +84,7 @@
         let body = JSON.stringify({"gid": gid});
 
         // I want to take this opportunity to inform the reader that security is very important to this project
+        //TODO: remove this holy crap
         let username = "fargusD";
         let password = "1234asdf";
 
@@ -114,7 +115,6 @@
         info.innerHTML = "<p>Result:  <b>" + result + "</b></p>";
     }
 
-    // TODO: call snake
     const call_snake = async () => {
         // getting snake url from UI
         let snake_url = document.getElementById("snake-url").value;
@@ -126,7 +126,7 @@
         }
 
         body = JSON.stringify({
-            'URL': 'http://localhost:8080',
+            'URL': snake_url,
             'data': data.turn[turn]
         });
 
