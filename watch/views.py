@@ -9,6 +9,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 @login_required(login_url='accounts/login/')
 def index(request):
-    content = {'api_url': request.build_absolute_uri('/')}
+    content = {
+        'api_url': request.build_absolute_uri('/'),
+        'username': request.user
+    }
     return render(request, 'watch/watch_games.html', content)
 

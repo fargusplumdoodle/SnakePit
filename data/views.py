@@ -85,39 +85,6 @@ class GameView(APIView):
                 'error': 'invalid request json'
             }))
 
-    def delete(self, request):
-        """
-        This view just deletes a specified GID or Turn
-
-        To delete a whole game:
-            {
-                'gid': <gid requested>
-            }
-        To delete a turn:
-            {
-                'gid': <gid requested>,
-                'turn': <turn number to delete>
-            }
-        """
-        try:
-            r = json.loads(request.body)
-        except json.decoder.JSONDecodeError:
-            print("bad json:" + str(request.body))
-            return HttpResponse(status=400, content=json.dumps({
-                'error': 'bad request',
-            }))
-
-        gid = r['gid']
-
-        if 'turn' in r:
-            # we need to delete  the specified turn
-            c.delete_turn(gid, r['turn'])
-        else:
-            # deleting whole game because turn was not specified
-            c.delete_game(gid)
-
-        return HttpResponse(status=200)
-
     def get(self, request):
         """
         This view just returns a specified GID
@@ -164,6 +131,43 @@ class GameView(APIView):
             return HttpResponse(status=500, content=json.dumps({
                 'error': 'internal error, probably multiple games with that GID'
             }))
+
+
+@csrf_exempt
+def delete_game(request):
+    """
+    This view just deletes a specified GID or Turn
+
+    To delete a whole game:
+        {
+            'gid': <gid requested>
+        }
+    To delete a turn:
+        {
+            'gid': <gid requested>,
+            'turn': <turn number to delete>
+        }
+    """
+    if request.method != "DELETE":
+        return HttpResponse(status=400, content={'error':'method not supported: ' + request.method})
+    try:
+        r = json.loads(request.body)
+    except json.decoder.JSONDecodeError:
+        print("bad json:" + str(request.body))
+        return HttpResponse(status=400, content=json.dumps({
+            'error': 'bad request',
+        }))
+
+    gid = r['gid']
+
+    if 'turn' in r:
+        # we need to delete  the specified turn
+        c.delete_turn(gid, r['turn'])
+    else:
+        # deleting whole game because turn was not specified
+        c.delete_game(gid)
+
+    return HttpResponse(status=200)
 
 
 @csrf_exempt

@@ -78,15 +78,57 @@
             let answer = confirm("Are you sure you want to delete GID:" + info_gid);
 
             if ( answer ) {
+                let data_endpoint = '{{ api_url }}games/delete';
+                let body = JSON.stringify({"gid": info_gid});
 
+                const response = await fetch(data_endpoint, {
+                    method: 'DELETE',
+                    body: body, // string or object
+                    headers:{
+                        'Content-Type': 'application/json',
+                    },
+                });
+                const myJson = await response.json(); //extract JSON from the http response
+
+                if (response.status != 200){
+                    alert("Failed to delete game (Its not your fault)")
+                }
             }
     };
-    function deleteTurn() {
+
+    const deleteTurn = async () => {
         if (info_gid === 'example_gid') {
             alert("You need to load a game first");
+            return;
         }
 
-    }
+        // double checking, I dont want users to have this functionality if your reading this Jason
+        let answer = confirm("Are you sure you want to delete:\n" +
+            " GID:" + info_gid +
+            "\nTurn: " + turn);
+
+        if ( answer ) {
+            let data_endpoint = '{{ api_url }}games/delete';
+            let body = JSON.stringify({
+                "gid": info_gid,
+                "turn": turn
+            });
+
+            const response = await fetch(data_endpoint, {
+                method: 'DELETE',
+                body: body, // string or object
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+            });
+            const myJson = await response.json(); //extract JSON from the http response
+
+            if (response.status != 200){
+                alert("Failed to delete game (Its not your fault)")
+            }
+        }
+    };
+
     const get_game_list = async () => {
         let data_endpoint = '{{ api_url }}games/list';
         let body = {};
