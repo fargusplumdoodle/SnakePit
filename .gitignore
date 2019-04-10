@@ -1,4 +1,6 @@
 .idea/**
 .idea
 db.sqlite3
-ithiessen/__pychache__/
+ithiessen/__pychache__/**
+**/__pychache__/**	
+
