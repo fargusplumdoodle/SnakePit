@@ -237,10 +237,7 @@ def call_battlesnake(request):
         turn = json.dumps(data['data'])
         url = data['URL'] + '/move'
 
-        print('making request')
-        print('url: ', url)
-        print('data: ', turn)
-        r = requests.post(url=url, data=turn)
+        r = requests.post(url=url, json=turn)
 
         if r.status_code != 200:
             return HttpResponse(status=400, content=json.dumps({

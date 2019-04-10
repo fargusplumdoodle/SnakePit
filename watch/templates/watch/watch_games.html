@@ -83,17 +83,12 @@
         let data_endpoint = 'http://localhost:8000/games/get';
         let body = JSON.stringify({"gid": gid});
 
-        // I want to take this opportunity to inform the reader that security is very important to this project
-        //TODO: remove this holy crap
-        let username = "fargusD";
-        let password = "1234asdf";
 
         const response = await fetch(data_endpoint, {
             method: 'POST',
             body: body, // string or object
             headers:{
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic  ' + btoa(username + ':' + password)
             },
         });
         const myJson = await response.json(); //extract JSON from the http response
@@ -120,7 +115,6 @@
         let snake_url = document.getElementById("snake-url").value;
         let body;
 
-
         if (info_gid == 'example_gid' ){
             alert("Please load a game first");
         }
@@ -129,8 +123,6 @@
             'URL': snake_url,
             'data': data.turn[turn]
         });
-
-        console.log(body);
 
         const response = await fetch('{{ api_url }}', {
             method: 'POST',
@@ -143,9 +135,10 @@
 
         const myJson = await response.json(); //extract JSON from the http response
 
-        console.log(myJson);
+        result = JSON.parse(myJson).move;
+
         update_response();
-    }
+    };
 
     function stepForward() {
         if ( turn < max_turn ) {
