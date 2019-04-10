@@ -138,7 +138,7 @@ def delete_turn(gid, turn_no):
 def create_game(data):
     '''
     This function creates and saves a game in the database with the specified name
-    :param data: game id
+    :param data: game object
     '''
     gid = data['game']['id']
     snake_name = data['you']['name']
@@ -271,8 +271,12 @@ def get_game(data):
     """
     gid = data['game']['id']
 
-    # getting game object
-    return Game.objects.filter(gid=gid)[0]
+    game_queryset = Game.objects.filter(gid=gid)
+
+    if len(game_queryset) == 0:
+        raise ValueError('Requested game does not exist in database')
+
+    return game_queryset.first()
 
 
 def get_game_by_gid(gid):
@@ -281,8 +285,12 @@ def get_game_by_gid(gid):
     :param data: json request from battlesnake gmae
     :return: game object from database
     """
-    # getting game object
-    return Game.objects.filter(gid=gid)[0]
+    game_queryset = Game.objects.filter(gid=gid)
+
+    if len(game_queryset) == 0:
+        raise ValueError('Requested game does not exist in database')
+
+    return game_queryset.first()
 
 
 def load_recent_gid():

@@ -146,4 +146,3 @@ def index(request):
     content = {'api_url': request.build_absolute_uri('/') + 'games/snake'}
     return render(request, 'watch/watch_games.html', content)
 
-

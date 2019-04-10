@@ -165,6 +165,13 @@ class TestGameEndpoint(TestCase):
         self.gid = previous_gid
         self.game['game']['id'] = previous_gid
 
+    def test_get_games_list(self):
+        r = requests.get(url=self.DATA_HOST + "/games/list")
+
+        games = json.loads(r.text)['games']
+
+        assert len(games) == len(Game.objects.all())
+
     def test_create_game_properly(self):
         # --- set up ----
         self.send_data('start', self.game)
@@ -223,12 +230,12 @@ class TestGameEndpoint(TestCase):
         for i in range(3):
             self.game['turn'] += 1
             r = self.send_data('turn', self.game)
-            assert r.status_code != 200  # status code shouldn't be 200 after we sent invalid data
+            assert r.status_code == 404  # status code should be 404
 
         # ending game
         self.game['turn'] += 1
         r = self.send_data('end', self.game)
-        assert r.status_code != 200  # status code shouldn't be 200 after we sent invalid data
+        assert r.status_code == 404  # status code shouldn't be 200 after we sent invalid data
 
     def tearDown(self):
         Game.objects.filter(gid='temp_12345').delete()
@@ -237,4 +244,5 @@ class TestGameEndpoint(TestCase):
         if len(Game.objects.filter(gid=self.gid)) > 0:
             Game.objects.filter(gid=self.gid).delete()
 
-
+        if random.choice([True, False, False]):
+            self.create_game(self.gid + '0')

@@ -43,11 +43,31 @@ class GameView(APIView):
 
             # all checks passed. We are pretty sure the data is valid at this point
             if option == 'start':
-                c.create_game(data)
+                try:
+                    c.create_game(data)
+                except ValueError:
+                    return HttpResponse(status=404, content=json.dumps({
+                        'error': 'invalid request: game does not exist'
+                    }))
+
             if option == 'turn':
-                c.save_turn(data)
+                try:
+                    c.save_turn(data)
+                except ValueError:
+                    return HttpResponse(status=404, content=json.dumps({
+                        'error': 'invalid request'
+                    }))
             if option == 'end':
-                c.end_game(data)
+                try:
+                    c.end_game(data)
+                except ValueError:
+                    return HttpResponse(status=404, content=json.dumps({
+                        'error': 'invalid request'
+                    }))
+            else:
+                return HttpResponse(status=400, content=json.dumps({
+                    'error': 'bad request, option must be (\'start\',\'turn\',\'end\')',
+                }))
 
             return HttpResponse(status=200)
 
@@ -123,12 +143,15 @@ class GameView(APIView):
             return HttpResponse(status=404, content=json.dumps({
                 'error': 'invalid request'
             }))
+        except ValueError:
+            return HttpResponse(status=404, content=json.dumps({
+                'error': 'game not found'
+            }))
         except IndexError:
             return HttpResponse(status=404, content=json.dumps({
                 'error': 'game not found'
             }))
         except json.decoder.JSONDecodeError:
-            print('bad request: ', request, request.body)
             return HttpResponse(status=400, content=json.dumps({
                 'error': 'bad request',
             }))
