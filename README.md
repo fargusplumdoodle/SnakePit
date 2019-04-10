@@ -28,9 +28,10 @@ Here I will outline how this project satisfies the requirements of the project:
 ## Security implications
 I would like to record somewhere in here that I am very aware that it is a terrible idea to blindly call URL specified by the user and in a more serious enviroment I would never include such functionality. But for this its fine.
 
-## Isaac get to the point and tell me how to test this!
-Login:
+## Login credentails
 - username: fargusD
 - password: 1234asdf
+
+Again, security is very important to this project
 
 
