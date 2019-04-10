@@ -206,6 +206,42 @@ def get_game(request):
             'error': 'internal error, probably multiple games with that GID'
         }))
 
+class CallSnakeView(APIView):
+    authentication_classes = (SessionAuthentication, BasicAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        """
+            MUST BE AUTHENTICATED!
+
+            The plan is the webpage will recieve the URL of the snake
+            from the user, and the user will specify which turn they want
+            to have the snake compute a move for
+
+            Then the webpage will call this view.
+
+            This views function is to call battlesnakes.
+
+            Parameters
+            {
+                'URL':'http://localhost/',
+                'data': {Turn object}
+            }
+
+            This function performs simple validation on the data
+        """
+        try:
+            # loading request
+            return HttpResponse(status=200)
+        except Exception:
+            return HttpResponse(status=404, content=json.dumps({
+                'error': 'invalid request'
+            }))
+        except KeyError:
+            return HttpResponse(status=404, content=json.dumps({
+                'error': 'invalid request json'
+            }))
+
 
 def simple_validate_game_data(data):
     try:
