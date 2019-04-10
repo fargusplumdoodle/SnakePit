@@ -28,10 +28,26 @@ Here I will outline how this project satisfies the requirements of the project:
 ## Security implications
 I would like to record somewhere in here that I am very aware that it is a terrible idea to blindly call URL specified by the user and in a more serious enviroment I would never include such functionality. But for this its fine.
 
+To be fair I do perform validation on the data that is sent so its less likely an attacker could do something malicious. Also its highly unlikely someone would be motivated to do anything malicious because theres really nothing at stake here, maybe they crash a battlesnake but thats it.  
+
 ## Login credentails
 - username: fargusD
 - password: 1234asdf
 
 Again, security is very important to this project
 
+## Dont have a battlesnake?
+The URL for my battlesnake is: 
+https://sekhnet-snek-2018.herokuapp.com/
+__Make sure you leave the trailing slash!__
 
+## What is battlesnake?
+Probably none of this will make sense if you dont know what battlesnake is.
+
+Heres a link to the battlesnake website: https://play.battlesnake.io/
+
+Its a game where you write the AI for a snake in a grid based game and try not to die.
+
+Snakes are APIs that conform to the battlesnake standard.
+
+ 
