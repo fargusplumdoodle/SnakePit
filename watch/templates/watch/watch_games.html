@@ -125,19 +125,25 @@
             alert("Please load a game first");
         }
 
-        body = JSON.stringify(data.turn[turn]);
+        body = JSON.stringify({
+            'URL': 'http://localhost:8080',
+            'data': data.turn[turn]
+        });
 
-        const response = await fetch(snake_url + 'move', {
+        console.log(body);
+
+        const response = await fetch('{{ api_url }}', {
             method: 'POST',
-            body: data.turn[turn], // string or object
+            body: body, // string or object
             mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json',
             },
         });
+
         const myJson = await response.json(); //extract JSON from the http response
 
-
+        console.log(myJson);
         update_response();
     }
 

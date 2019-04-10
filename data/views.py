@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from . import controller as c
 from .models import Game
 import json
+import requests
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -206,41 +207,57 @@ def get_game(request):
             'error': 'internal error, probably multiple games with that GID'
         }))
 
-class CallSnakeView(APIView):
-    authentication_classes = (SessionAuthentication, BasicAuthentication,)
-    permission_classes = (IsAuthenticated,)
 
-    def post(self, request):
-        """
-            MUST BE AUTHENTICATED!
+@csrf_exempt
+def call_battlesnake(request):
+    """
+        MUST BE AUTHENTICATED!
 
-            The plan is the webpage will recieve the URL of the snake
-            from the user, and the user will specify which turn they want
-            to have the snake compute a move for
+        The plan is the webpage will recieve the URL of the snake
+        from the user, and the user will specify which turn they want
+        to have the snake compute a move for
 
-            Then the webpage will call this view.
+        Then the webpage will call this view.
 
-            This views function is to call battlesnakes.
+        This views function is to call battlesnakes.
 
-            Parameters
-            {
-                'URL':'http://localhost/',
-                'data': {Turn object}
-            }
+        Parameters
+        {
+            'URL':'http://localhost/',
+            'data': {Turn object}
+        }
 
-            This function performs simple validation on the data
-        """
-        try:
-            # loading request
-            return HttpResponse(status=200)
-        except Exception:
-            return HttpResponse(status=404, content=json.dumps({
-                'error': 'invalid request'
+        This function performs simple validation on the data
+    """
+    try:
+        # loading request
+        data = json.loads(request.body)
+
+        # attempting to get data from request
+        turn = json.dumps(data['data'])
+        url = data['URL'] + '/move'
+
+        print('making request')
+        print('url: ', url)
+        print('data: ', turn)
+        r = requests.post(url=url, data=turn)
+
+        if r.status_code != 200:
+            return HttpResponse(status=400, content=json.dumps({
+                'error': 'Snake responded with a non 200 status code. Status code: ' + str(r.status_code)
             }))
-        except KeyError:
-            return HttpResponse(status=404, content=json.dumps({
-                'error': 'invalid request json'
-            }))
+
+        return HttpResponse(status=200, content=json.dumps(r.text))
+
+    except json.decoder.JSONDecodeError:
+        return HttpResponse(status=400, content=json.dumps({
+            'error': 'invalid request json'
+        }))
+
+    except KeyError:
+        return HttpResponse(status=400, content=json.dumps({
+            'error': 'invalid request json'
+        }))
 
 
 def simple_validate_game_data(data):
