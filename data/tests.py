@@ -7,11 +7,35 @@ import random
 import requests
 import json
 
-
 '''
 Assertions trigger when the statement is FALSE... you fool
 '''
 
+
+'''
+This populated the database from a bunch of games that I have saved.
+
+Do not run
+
+class TestPopulateDatabase(TestCase):
+    def test_create(self):
+        games = ['/home/fargus/Projects/Battlesnake/saves/2019-01-19_2620/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-01-19_26ba/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-01-19_29ef/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-01-19_9f7d/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-01-19_a22b/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-02-12_4861/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-02-12_5803/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-02-12_95ab/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-02-12_9ed2/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-02-12_b008/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-02-12_de97/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-02-12_dfb9/',
+                 '/home/fargus/Projects/Battlesnake/saves/2019-02-12_eed3/']
+
+        for x in games:
+            c.load_database_from_game(x)
+'''
 
 class TestGameEndpoint(TestCase):
     def setUp(self):
@@ -206,7 +230,7 @@ class TestGameEndpoint(TestCase):
                 'gid': gid,
                 'turn': x + 1
             })
-            r = requests.delete(url=self.DATA_HOST + "/games/", data=content, auth=(self.username, self.password))
+            r = requests.delete(url=self.DATA_HOST + "/games/delete", data=content, auth=(self.username, self.password))
             assert r.status_code == 200
 
         assert len(Turn.objects.filter(game=game)) == 0  # should be no remaining games
@@ -215,7 +239,7 @@ class TestGameEndpoint(TestCase):
         content = json.dumps({
             'gid': gid
         })
-        r = requests.delete(url=self.DATA_HOST + "/games/", data=content, auth=(self.username, self.password))
+        r = requests.delete(url=self.DATA_HOST + "/games/delete", data=content, auth=(self.username, self.password))
 
         assert r.status_code == 200  # status code should be 200 when we delete the game we just made
 
