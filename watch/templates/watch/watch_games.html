@@ -11,15 +11,19 @@
     body {
         background-color: darkgreen;
     }
-    .page-header {
-        margin: auto;
-        width: 400px;
-    }
     .page-content {
         background-color: white;
         margin: auto;
         padding:5%;
-        width: 30%;
+        width: 40%;
+    }
+    #page_logo {
+        margin:auto;
+        width:200px;
+        height:130px;
+    }
+    #info_text{
+        float: right;
     }
     .inner-page-content{
         margin:auto;
@@ -32,13 +36,10 @@
     }
 </style>
 <body>
-    <div class="page-header">
-        <div>
-            <img id="page_logo" width="200px" height="130 px" src="{%  static "assets/SnakePitLogo.png"%}" alt="Step Backward">
-        </div>
-    </div>
     <div class="page-content">
         <div class="inner-page-content">
+            <img id="page_logo"  src="{%  static "assets/SnakePitLogo.png"%}" alt="Step Backward">
+            <p id="info_text">Test your Battlesnake! </br>Snake URL requires a trailing slash!</p>
             <p>Select Game:</p>
             <select id="gameSelect">
                                        </select>
