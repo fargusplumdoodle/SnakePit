@@ -1,0 +1,98 @@
+#%RAML 1.0
+---
+title: SnakePit
+baseURi: http://ithiessen.deploy.cs.camosun.bc.ca
+version: v1.0
+
+/admin:
+        get:
+                description: Django Admin interface. Dont use this.
+/games:
+        /list:
+                get:
+                        description: Lists the games in the database. No parameters required for request.
+                        responses:
+                                200:
+                                        body:
+                                                application/json:
+                                                        example: { "games": ["t_32", "a6d5b55a-2865-4e51-9452-8c7856e1de97", "3fdf4a73-4ef1-46ac-a8dd-ddea60ac26ba"]}
+        /get:
+                get:
+                        description: Retrieves a specific game from the database. This will be a complete battlesnake game including all of the turns as JSON objects.
+
+                        queryParameters:
+                                gid:
+                                        displayName: gid	
+                                        type: string
+                                        description: Game ID
+                                        example: t_32
+                                        required: true
+                        responses:
+                                200:
+                                        body:
+                                                application/json:
+                                                        example: {  "width": null,  "height": null,  "gid": "t_340",  "turn": [    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14          },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 5,
+     "board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name":
+"SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },          { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1          },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      },      "game": {        "id": "t_340"      }    },    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14          },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 6,     
+"board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id":
+"213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name": "SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },   
+      { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1 
+        },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]    
+ },      "game": {        "id": "t_340"      }    },    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14
+         },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 7,      "board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name": "SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },        
+ { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1      
+   },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      }, 
+    "game": {        "id": "t_340"      }    },    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14     
+    },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 8,      "board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name": "SekhnetSnek",
+"id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },          { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1          },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      },      "game": {        "id": "t_340"      }    }  ]}
+
+
+/scan:
+        post:
+                queryParameters:
+                        username:
+                                displayName: Username
+                                type: string
+                                description: Username
+                                example: BurtFireland0
+                                required: true
+                        host:
+                                displayName: Host
+                                type: string
+                                description: DNS name, or IPv4 address
+                                example: 192.168.0.54
+                                required: true
+                        alias:
+                                displayName: Aliases
+                                type: list of aliases in database
+                                description: A scan to be ran against the host
+                                example: "nettacker_all"
+                                required: true
+                responses:
+                        200:
+                                body:
+                                        application/json:
+                                                example: | 
+                                                        {
+                                                                "scan_id":"scan_53"
+                                                        }
+                        400:
+                                body:
+                                        application/json:
+                                                example: | 
+                                                        {
+                                                                "Error": [ "Invalid username", "Username doesn’t exist", "Invalid DNS or IPv4 address", "Hostname doe
+                                                                sn’t map to IP", "Invalid alias name", "Alias does not exist in database", "User does not ha
+                                                                ve sufficient privileges to perform action" ]                                               
+
+                                                        }
+
+/result:
+        get:
+/org:
+        get:
+
+        post:
+/user:
+        get:
+        post:

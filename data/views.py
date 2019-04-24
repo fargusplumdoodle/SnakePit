@@ -238,8 +238,6 @@ def get_game(request):
 @csrf_exempt
 def call_battlesnake(request):
     """
-        MUST BE AUTHENTICATED!
-
         The plan is the webpage will recieve the URL of the snake
         from the user, and the user will specify which turn they want
         to have the snake compute a move for
