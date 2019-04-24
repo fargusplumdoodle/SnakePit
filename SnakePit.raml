@@ -17,12 +17,12 @@ version: v1.0
                                                 application/json:
                                                         example: { "games": ["t_32", "a6d5b55a-2865-4e51-9452-8c7856e1de97", "3fdf4a73-4ef1-46ac-a8dd-ddea60ac26ba"]}
         /get:
-                get:
+                post:
                         description: Retrieves a specific game from the database. This will be a complete battlesnake game including all of the turns as JSON objects.
 
                         queryParameters:
                                 gid:
-                                        displayName: gid	
+                                        displayName: gid
                                         type: string
                                         description: Game ID
                                         example: t_32
@@ -33,66 +33,58 @@ version: v1.0
                                                 application/json:
                                                         example: {  "width": null,  "height": null,  "gid": "t_340",  "turn": [    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14          },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 5,
      "board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name":
-"SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },          { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1          },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      },      "game": {        "id": "t_340"      }    },    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14          },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 6,     
+"SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },          { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1          },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      },      "game": {        "id": "t_340"      }    },    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14          },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 6,
 "board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id":
-"213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name": "SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },   
-      { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1 
-        },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]    
+"213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name": "SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },
+      { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1
+        },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]
  },      "game": {        "id": "t_340"      }    },    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14
-         },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 7,      "board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name": "SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },        
- { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1      
-   },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      }, 
-    "game": {        "id": "t_340"      }    },    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14     
+         },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 7,      "board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name": "SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },
+ { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1
+   },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      },
+    "game": {        "id": "t_340"      }    },    {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14
     },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 8,      "board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name": "SekhnetSnek",
 "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },          { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1          },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      },      "game": {        "id": "t_340"      }    }  ]}
+        /delete:
+                delete:
+                        description: Deletes either a game or a turn from the database. If the user only specifies a GID then the whole game will be deleted. If the user also includes a valid turn in their request, the API will only delete the specific turn.
+                        queryParameters:
+                            gid:
+                              displayName: gid
+                              type: string
+                              description: Game ID
+                              example: t_32
+                              required: true
+                            turn:
+                              displayName: turn
+                              type: string
+                              description: Turn number to delete. This is optional.
+                              example: 2
+                              required: false
+                        responses:
+                                200:
+        /snake:
+                post:
+                        description: This endpoint should not be called directly, let the Javascript front end do it. That said the function of this endpoint is to make an API call to the battlesnake. It is put here because CORS would block it if the client were to directly call the battlesnake.
+                        queryParameters:
+                            URL:
+                              displayName: URL
+                              type: string
+                              description: URL of the Snake API
+                              example: https://sekhnet-snek-2018.herokuapp.com/
+                              required: true
+                            data:
+                              displayName: data
+                              type: json object
+                              description: A single battlesnake turn
+                              example: {      "you": {        "health": 98,        "body": [          { "y": 3, "x": 14          },          { "y": 4, "x": 14          },          { "y": 4, "x": 13          }        ],        "name": "SekhnetSnek",        "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"      },      "turn": 5,
+"board": {        "snakes": [          { "health": 98, "body": [ {   "y": 4,   "x": 11 }, {   "y": 3,   "x": 11 }, {   "y": 3,   "x": 12 } ], "name": "Son of Robosnake", "id": "213cd80c-ef75-404c-968b-db2733ac6fbe"          },          { "health": 98, "body": [ {   "y": 3,   "x": 14 }, {   "y": 4,   "x": 14 }, {   "y": 4,   "x": 13 } ], "name":
+"SekhnetSnek", "id": "13e7d710-dfb9-45c2-919d-5dacbf609686"          }        ],        "width": 17,        "height": 10,        "food": [          { "y": 4, "x": 16          },          { "y": 0, "x": 5          },          { "y": 7, "x": 8          },          { "y": 0, "x": 0          },          { "y": 0, "x": 7          },          { "y": 4, "x": 1          },          { "y": 1, "x": 5          },          { "y": 1, "x": 12          },          { "y": 9, "x": 4          },          { "y": 9, "x": 5          }        ]      },      "game": {        "id": "t_340"      }    }
+                              required: true
+                        responses:
+                          200:
+                                  description: This is really whatever the API returns and is likely to change in the coming years. However its is likely it will include "move":"direction".
+                                  body:
+                                          application/json:
 
-
-/scan:
-        post:
-                queryParameters:
-                        username:
-                                displayName: Username
-                                type: string
-                                description: Username
-                                example: BurtFireland0
-                                required: true
-                        host:
-                                displayName: Host
-                                type: string
-                                description: DNS name, or IPv4 address
-                                example: 192.168.0.54
-                                required: true
-                        alias:
-                                displayName: Aliases
-                                type: list of aliases in database
-                                description: A scan to be ran against the host
-                                example: "nettacker_all"
-                                required: true
-                responses:
-                        200:
-                                body:
-                                        application/json:
-                                                example: | 
-                                                        {
-                                                                "scan_id":"scan_53"
-                                                        }
-                        400:
-                                body:
-                                        application/json:
-                                                example: | 
-                                                        {
-                                                                "Error": [ "Invalid username", "Username doesn’t exist", "Invalid DNS or IPv4 address", "Hostname doe
-                                                                sn’t map to IP", "Invalid alias name", "Alias does not exist in database", "User does not ha
-                                                                ve sufficient privileges to perform action" ]                                               
-
-                                                        }
-
-/result:
-        get:
-/org:
-        get:
-
-        post:
-/user:
-        get:
-        post:
+                                                  example: {"move": "left"}
