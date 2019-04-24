@@ -4,10 +4,26 @@ title: SnakePit
 baseURi: http://ithiessen.deploy.cs.camosun.bc.ca
 version: v1.0
 
+/:
+        description: SnakePit web interface. Will redirect to a log in page if not authenticated.
+        get:
+                description: SnakePit web interface.
+/accounts:
+        description: Djangos authentication system, used for logging in. An unauthenticated user will be redirected here. Dont go here directly.
+        get:
+
+/docs:
+        description: This documentation page. No authentication required.
+        get:
+
 /admin:
+        description: Django Admin interface. Dont use this.
         get:
                 description: Django Admin interface. Dont use this.
+
+
 /games:
+        description: API endpoint for all database transactions for games and calling snake APIs.
         /list:
                 get:
                         description: Lists the games in the database. No parameters required for request.

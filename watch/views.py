@@ -15,3 +15,6 @@ def index(request):
     }
     return render(request, 'watch/watch_games.html', content)
 
+
+def docs(request):
+    return render(request, 'watch/docs.html', {})
