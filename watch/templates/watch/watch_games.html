@@ -202,6 +202,9 @@
             'data': data.turn[turn]
         });
 
+        result = 'waiting response...';
+        update_response();
+
         const response = await fetch('{{ api_url }}games/snake' , {
             method: 'POST',
             body: body, // string or object
